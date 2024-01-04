@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "310550606196",
+    "project_id": "natural-gem-98a97",
+    "storage_bucket": "natural-gem-98a97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:310550606196:android:665eef333640a84d913c21",
+        "android_client_info": {
+          "package_name": "com.example.naturalgem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCKfz1Svu_7iPYEHhQIMHSxTYPzs_jSQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
