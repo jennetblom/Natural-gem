@@ -1,9 +1,12 @@
 package com.example.naturalgem
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +28,7 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
 
         holder.nameTextView.text = place.name
         holder.categoryTextView.text = place.category
+        holder.placePosition=position
 
 
         if(place.imageResId!=null){holder.placeImage.setImageResource(place.imageResId!!)}else{
@@ -33,10 +37,32 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
 
 
     }
+    fun removePlace(position: Int){
+        PlaceManager.places.removeAt(position)
+        notifyDataSetChanged()
+    }
     inner class ViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
-        val nameTextView = itemView.findViewById<TextView>(R.id.costraintlayout)
+        val nameTextView = itemView.findViewById<TextView>(R.id.nameTextView)
         val categoryTextView = itemView.findViewById<TextView>(R.id.categoryTextView)
         val placeImage = itemView.findViewById<ImageView>(R.id.placeImage)
+        val editButton= itemView.findViewById<ImageButton>(R.id.editButton)
+        val deleteButton = itemView.findViewById<ImageButton>(R.id.deleteButton)
+        var placePosition = 0
+
+        init {
+
+            itemView.setOnClickListener {
+                val intent = Intent(context, AddPlaceAndEditActivity::class.java)
+                intent.putExtra(PLACE_POSITION_KEY,placePosition)
+                context.startActivity(intent)
+            }
+            editButton.setOnClickListener {
+
+            }
+            deleteButton.setOnClickListener {
+                removePlace(placePosition)
+            }
+        }
 
     }
 }

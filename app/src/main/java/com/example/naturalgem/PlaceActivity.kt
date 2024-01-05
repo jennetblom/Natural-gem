@@ -26,6 +26,11 @@ class PlaceActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        recyclerView.adapter?.notifyDataSetChanged()
 
 
     }

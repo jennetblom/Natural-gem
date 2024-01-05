@@ -13,7 +13,7 @@
         android:theme="@style/Theme.NaturalGem"
         tools:targetApi="31">
         <activity
-            android:name=".AddPlaceActivity"
+            android:name=".AddPlaceAndEditActivity"
             android:exported="false" />
         <activity
             android:name=".PlaceActivity"

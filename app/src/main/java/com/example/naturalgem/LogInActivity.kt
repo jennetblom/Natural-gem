@@ -11,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.auth.User
 import com.google.firebase.ktx.Firebase
 
 class LogInActivity : AppCompatActivity() {
@@ -45,7 +44,7 @@ class LogInActivity : AppCompatActivity() {
     }
 
     fun gotToAddActivity(){
-        val intent = Intent(this,AddPlaceActivity::class.java)
+        val intent = Intent(this,AddPlaceAndEditActivity::class.java)
         startActivity(intent)
     }
     fun signUp(){
