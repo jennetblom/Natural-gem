@@ -10,10 +10,13 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
     RecyclerView.Adapter<PlacesRecyclerAdapter.ViewHolder>(){
 
+    var db = Firebase.firestore
     val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,8 +41,13 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
 
     }
     fun removePlace(position: Int){
-        PlaceManager.places.removeAt(position)
-        notifyDataSetChanged()
+////        PlaceManager.places.removeAt(position)
+//
+//        notifyDataSetChanged()
+        val place = PlaceManager.places[position]
+        db.collection("places").document(place.documentId!!).delete()
+
+
     }
     inner class ViewHolder(itemView : View):RecyclerView.ViewHolder(itemView){
         val nameTextView = itemView.findViewById<TextView>(R.id.nameTextView)
@@ -52,12 +60,18 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
         init {
 
             itemView.setOnClickListener {
-                val intent = Intent(context, AddPlaceAndEditActivity::class.java)
+//                val intent = Intent(context, AddPlaceAndEditActivity::class.java)
+//                intent.putExtra(PLACE_POSITION_KEY,placePosition)
+//                context.startActivity(intent)
+                val intent = Intent(context,DisplayPlaceActivity::class.java)
                 intent.putExtra(PLACE_POSITION_KEY,placePosition)
                 context.startActivity(intent)
             }
             editButton.setOnClickListener {
 
+                val intent = Intent(context, AddPlaceAndEditActivity::class.java)
+                intent.putExtra(PLACE_POSITION_KEY,placePosition)
+                context.startActivity(intent)
             }
             deleteButton.setOnClickListener {
                 removePlace(placePosition)
