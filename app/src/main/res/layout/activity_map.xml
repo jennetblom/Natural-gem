@@ -12,10 +12,9 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="369dp"
         android:layout_height="516dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mapWelcomeText" />
 
@@ -23,14 +22,16 @@
         android:id="@+id/mapFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="28dp"
         android:src="@drawable/baseline_home_24"
         android:text="Click Me!"
         app:backgroundTint="#9C27B0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintHorizontal_bias="0.867"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapFragment"
+        app:layout_constraintVertical_bias="1.0"
         app:rippleColor="#673AB7" />
 
     <TextView
@@ -42,7 +43,7 @@
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="5"
-        android:text="Smultronstället"
+        android:text="Smultronställen"
         android:textAlignment="center"
         android:textColor="#E91E63"
         android:textSize="34sp"

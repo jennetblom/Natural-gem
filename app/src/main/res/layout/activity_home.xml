@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/welcomeText"
-        android:layout_width="243dp"
+        android:layout_width="246dp"
         android:layout_height="190dp"
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-condensed-medium"

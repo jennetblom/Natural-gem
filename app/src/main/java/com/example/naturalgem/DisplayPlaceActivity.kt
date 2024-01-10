@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import org.w3c.dom.Text
 
 
@@ -32,8 +33,15 @@ class DisplayPlaceActivity : AppCompatActivity() {
         nameDisplay.setText(place.name)
         categoryDisplay.setText(place.category)
         infoDisplay.setText(place.info)
-        if(place.imageResId!=null){
-            imageDisplay.setImageResource(place.imageResId!!)
+
+//        if(place.imageResId!=null){
+//            imageDisplay.setImageResource(place.imageResId!!)
+//        }
+        if(place.imageUri!=null){
+            Glide.with(this)
+                .load(place.imageUri)
+                .placeholder(R.drawable.flower)
+                .into(imageDisplay)
         }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -34,7 +35,17 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
         holder.placePosition=position
 
 
-        if(place.imageResId!=null){holder.placeImage.setImageResource(place.imageResId!!)}else{
+//        if(place.imageResId!=null){holder.placeImage.setImageResource(place.imageResId!!)}else{
+//            holder.placeImage.setImageResource(R.drawable.flower)
+//        }
+
+        if(place.imageUri!=null){
+            Glide.with(holder.itemView.context)
+                .load(place.imageUri)
+                .placeholder(R.drawable.flower)
+                .into(holder.placeImage)
+        }
+        else{
             holder.placeImage.setImageResource(R.drawable.flower)
         }
 

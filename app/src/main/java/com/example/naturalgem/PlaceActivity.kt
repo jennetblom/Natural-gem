@@ -1,6 +1,7 @@
 package com.example.naturalgem
 
 import android.content.Intent
+import android.os.Build.VERSION_CODES.P
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -58,6 +60,8 @@ class PlaceActivity : AppCompatActivity() {
                     PlaceManager.places.clear()
                     PlaceManager.places.addAll(snapshot.toObjects(Place::class.java))
                     recyclerView.adapter?.notifyDataSetChanged()
+
+
                 } else {
                     Log.d("!!!", "Current data: null")
                 }
@@ -67,6 +71,8 @@ class PlaceActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+
         recyclerView.adapter?.notifyDataSetChanged()
 
 
