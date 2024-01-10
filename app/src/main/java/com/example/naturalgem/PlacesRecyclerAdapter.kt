@@ -45,7 +45,9 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
 //
 //        notifyDataSetChanged()
         val place = PlaceManager.places[position]
-        db.collection("places").document(place.documentId!!).delete()
+        if(place.documentId!=null) {
+            db.collection("places").document(place.documentId!!).delete()
+        }
 
 
     }

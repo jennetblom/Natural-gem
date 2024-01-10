@@ -1,5 +1,6 @@
 package com.example.naturalgem
 
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.DocumentId
 
 data class Place(

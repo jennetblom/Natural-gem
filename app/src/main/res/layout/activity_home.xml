@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background_purple"
+    tools:context=".HomeActivity">
+
+    <ImageView
+        android:id="@+id/imageStrawberry"
+        android:layout_width="137dp"
+        android:layout_height="189dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/smultron2" />
+
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="243dp"
+        android:layout_height="190dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Välkommen till smultronställen!"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/placeButton"
+        android:layout_width="256dp"
+        android:layout_height="190dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#000000"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/mapText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/flower" />
+
+    <ImageButton
+        android:id="@+id/mapButton"
+        android:layout_width="203dp"
+        android:layout_height="206dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/gradient_background_purple"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.215"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/mapicon2" />
+
+    <TextView
+        android:id="@+id/placeText"
+        android:layout_width="304dp"
+        android:layout_height="31dp"
+        android:text="Titta och lägg till favoritställen"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/placeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.299"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeText"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/mapText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Se favoritställen på kartan"
+        android:textColor="#C8000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/mapButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

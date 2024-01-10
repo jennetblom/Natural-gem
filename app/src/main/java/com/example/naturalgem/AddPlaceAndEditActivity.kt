@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,7 +23,8 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
     lateinit var categoryView : EditText
     lateinit var imageEdit:ImageView
     lateinit var infoEditText:EditText
-    lateinit var latlngEditText:EditText
+    lateinit var latEditText:EditText
+    lateinit var longEditText: EditText
     lateinit var auth : FirebaseAuth
 
 
@@ -37,7 +39,8 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
         categoryView = findViewById(R.id.categoryEditText)
         imageEdit = findViewById(R.id.imageEdit)
         infoEditText=findViewById(R.id.infoEditText)
-        latlngEditText =findViewById(R.id.latLngEditText)
+        //latEditText =findViewById(R.id.latEditText)
+        //longEditText = findViewById(R.id.longEditText)
 
         val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
         val saveButton = findViewById<Button>(R.id.saveButton)
@@ -64,12 +67,16 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
         val updatedName = nameView.text.toString()
         val updatedCategory = categoryView.text.toString()
         val updatedInfo = infoEditText.text.toString()
+        //val updatedLatitude = latEditText.text.toString().toDouble()
+        //val updatedLongitude = longEditText.text.toString().toDouble()
+
 
         val place = PlaceManager.places[position]
 
         place.name=updatedName
         place.category=updatedCategory
         place.info=updatedInfo
+        //place.location=LatLng(updatedLatitude,updatedLongitude)
 
         val user = auth.currentUser
         if(user!=null){
@@ -82,7 +89,8 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
                     mapOf(
                         "name" to updatedName,
                         "category" to updatedCategory,
-                        "info" to updatedInfo
+                        "info" to updatedInfo,
+                        //"location" to LatLng(updatedLatitude,updatedLongitude)
                     )
                 ).addOnSuccessListener {
                     val intent = Intent(this,PlaceActivity::class.java)
@@ -105,6 +113,9 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
         nameView.setText(place.name)
         categoryView.setText(place.category)
         infoEditText.setText(place.info)
+        //latEditText.setText(place.location?.latitude.toString())
+        //longEditText.setText(place.location?.longitude.toString())
+
         if(place.imageResId!=null){
             imageEdit.setImageResource(place.imageResId!!)
         }
@@ -113,6 +124,8 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
         val name = nameView.text.toString()
         val category = categoryView.text.toString()
         val info=infoEditText.text.toString()
+        val lat = latEditText.text.toString().toDouble()
+        val long = longEditText.text.toString().toDouble()
 
         val place = Place(null,name, category, null,info)
 
@@ -124,6 +137,7 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
 //        db.collection("users").document(user.uid)
 
             db.collection("places").add(place)
+        PlaceManager.places.add(place)
 
 
 

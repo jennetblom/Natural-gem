@@ -4,10 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -15,6 +16,9 @@ class PlaceActivity : AppCompatActivity() {
 
     lateinit var recyclerView : RecyclerView
     lateinit var addButton : FloatingActionButton
+    lateinit var homeButton:FloatingActionButton
+    lateinit var welcomePlaceText : TextView
+    lateinit var welcomeImage : ImageView
     var db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +29,18 @@ class PlaceActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = PlacesRecyclerAdapter(this,PlaceManager.places)
+        welcomePlaceText = findViewById(R.id.welcomePlaceText)
+        welcomeImage=findViewById(R.id.welcomeImage)
 
-       addButton = findViewById(R.id.floatingActionButton)
+
+       addButton = findViewById(R.id.addButton)
         addButton.setOnClickListener {
             val intent = Intent(this,LogInActivity::class.java)
+            startActivity(intent)
+        }
+        homeButton = findViewById(R.id.homeButton)
+        homeButton.setOnClickListener {
+            val intent= Intent(this,HomeActivity::class.java)
             startActivity(intent)
         }
 

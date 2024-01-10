@@ -13,13 +13,19 @@
         android:theme="@style/Theme.NaturalGem"
         tools:targetApi="31">
         <activity
+            android:name=".PlaceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MapActivity"
+            android:exported="false" />
+        <activity
             android:name=".DisplayPlaceActivity"
             android:exported="false" />
         <activity
             android:name=".AddPlaceAndEditActivity"
             android:exported="false" />
         <activity
-            android:name=".PlaceActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +36,13 @@
         <activity
             android:name=".LogInActivity"
             android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDnhIpkJNgdUxCGwS0GlQLIeHypAU4TCGY" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

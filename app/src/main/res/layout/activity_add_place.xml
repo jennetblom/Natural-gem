@@ -72,16 +72,28 @@
         app:layout_constraintTop_toBottomOf="@+id/categoryEditText" />
 
     <EditText
-        android:id="@+id/latLngEditText"
-        android:layout_width="284dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="15dp"
+        android:id="@+id/latEditText"
+        android:layout_width="123dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Vad är det för latitud och longitud?"
+        android:hint="Latitud"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoEditText" />
+
+    <EditText
+        android:id="@+id/longEditText"
+        android:layout_width="144dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="44dp"
+        android:ems="10"
+        android:hint="Longitud"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infoEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
