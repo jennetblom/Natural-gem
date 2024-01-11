@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.play.integrity.internal.l
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentId
@@ -52,8 +53,8 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
         categoryView = findViewById(R.id.categoryEditText)
         imageEdit = findViewById(R.id.imageEdit)
         infoEditText = findViewById(R.id.infoEditText)
-        //latEditText =findViewById(R.id.latEditText)
-        //longEditText = findViewById(R.id.longEditText)
+        latEditText =findViewById(R.id.latEditText)
+        longEditText = findViewById(R.id.longEditText)
 
         val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
         val saveButton = findViewById<Button>(R.id.saveButton)
@@ -62,8 +63,7 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
             displayPlace(placePosition)
             saveButton.setOnClickListener {
                 editPlace(placePosition)
-//                val intent = Intent(this,PlaceActivity::class.java)
-//                startActivity(intent)
+
 
             }
         } else {
@@ -84,20 +84,46 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
 
     fun editPlace(position: Int){
 
+
         val updatedName = nameView.text.toString()
         val updatedCategory = categoryView.text.toString()
         val updatedInfo = infoEditText.text.toString()
-        //val updatedLatitude = latEditText.text.toString().toDouble()
-        //val updatedLongitude = longEditText.text.toString().toDouble()
+        val latString = latEditText.text.toString()
+        val longString = longEditText.text.toString()
 
+        val updatedLatitude: Double?
+        val updatedLongitude: Double?
 
+        if(latString.isNotEmpty()&& longString.isNotEmpty())
+        try {
+            updatedLatitude = latString.toDouble()
+            updatedLongitude = longString.toDouble()
+        } catch (e: NumberFormatException) {
+            // Felaktig inmatning för latitud eller longitud. Hantera detta, t.ex., genom att visa ett felmeddelande.
+            return
+        }
+        else{
+            updatedLatitude=null
+            updatedLongitude=null
+        }
+
+        Log.d("!!!","efter trycatch: $updatedLatitude")
+        Log.d("!!!","$updatedLatitude")
         val place = PlaceManager.places[position]
 
         place.name=updatedName
         place.category=updatedCategory
         place.info=updatedInfo
 
-        //place.location=LatLng(updatedLatitude,updatedLongitude)
+
+        if (updatedLatitude != null && updatedLongitude != null) {
+            place.latitude=updatedLatitude
+            place.longitude=updatedLongitude
+        } else {
+            // Om latitud eller longitud är null, hantera det här, t.ex., genom att visa ett felmeddelande.
+            return
+        }
+
 
         if(selectedImageUri!=null){
             place.imageUri = selectedImageUri.toString()
@@ -107,11 +133,6 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
         if(user!=null){
             val documentId = place.documentId
 
-
-//            if(selectedImageUri!=null){
-//                place.imageUri = selectedImageUri.toString()
-//                uploadImageToFirebaseStorage(selectedImageUri,place.documentId)
-//            }
             if(documentId!=null){
                 val placeRef = db.collection("places").document(documentId)
 
@@ -120,8 +141,9 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
                         "name" to updatedName,
                         "category" to updatedCategory,
                         "info" to updatedInfo,
-                        "imageUri" to place.imageUri
-                        //"location" to LatLng(updatedLatitude,updatedLongitude)
+                        "imageUri" to place.imageUri,
+                        "latitude" to updatedLatitude,
+                        "longitude" to updatedLongitude
                     )
                 ).addOnSuccessListener {
                     val intent = Intent(this,PlaceActivity::class.java)
@@ -131,40 +153,24 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
                 }
             }
         }
-//        PlaceManager.places[position].name=nameView.text.toString()
-//        PlaceManager.places[position].category=categoryView.text.toString()
-//        PlaceManager.places[position].info=infoEditText.text.toString()
-
-
-
-
     }
     fun displayPlace(position:Int){
         val place = PlaceManager.places[position]
         nameView.setText(place.name)
         categoryView.setText(place.category)
         infoEditText.setText(place.info)
+//        latEditText.setText(place.latitude.toString())
+//        longEditText.setText(place.longitude.toString())
             if (place.imageUri != null) {
                 Glide.with(this)
                     .load(place.imageUri)
                     .placeholder(R.drawable.flower) // Visa en platsbild om URI är null eller bildladdningen misslyckas
                     .into(imageEdit)
             }
+        latEditText.setText(place.latitude?.toString())
+        longEditText.setText(place.longitude?.toString())
+
         }
-        //latEditText.setText(place.location?.latitude.toString())
-        //longEditText.setText(place.location?.longitude.toString())
-
-//        if(place.imageResId!=null){
-//            imageEdit.setImageResource(place.imageResId!!)
-//        }
-
-//        if (place.imageUri != null) {
-//            Glide.with(this)
-//                .load(place.imageUri)
-//                .placeholder(R.drawable.flower) // Visa en platsbild om URI är null eller bildladdningen misslyckas
-//                .into(imageEdit)
-//        }
-
     fun savePlace() {
         val name = nameView.text.toString()
         val category = categoryView.text.toString()
@@ -175,7 +181,7 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
 
         var imageUri: Uri? = selectedImageUri
 
-        val place = Place(null, name, category, imageUri.toString(), info)
+        val place = Place(null, name, category, imageUri.toString(), info, lat,long)
 
         val user = auth.currentUser
         if (user == null) {
@@ -199,51 +205,20 @@ class AddPlaceAndEditActivity : AppCompatActivity() {
                 Log.e("!!!", "Error adding document", exception)
             }
 
+        Log.d("!!!","${PlaceManager.places}")
         PlaceManager.places.add(place)
 
 
 
-//        db.collection("users").document(user.uid)
-
-//            db.collection("places").add(place)
-//        PlaceManager.places.add(place)
-
-
-
-
-//        db.collection("users").document(user.uid)
-//            .collection("Places").document(place.documentId!!).delete()
-
-
     }
-//    fun addNewPlace(){
-//        val name = nameView.text.toString()
-//        val category = categoryView.text.toString()
-//        val info = infoEditText.text.toString()
-//        val place = Place(null,name,category,null, info)
-//        PlaceManager.places.add(place)
-//        nameView.setText("")
-//        categoryView.setText("")
-//        infoEditText.setText("")
-//        val intent = Intent(this,PlaceActivity::class.java)
-//        startActivity(intent)
-//    }
+
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
 
-//    if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-//        val selectedImageUri: Uri? = data?.data
-//        // Now, you can use the selectedImageUri to display or upload the image.
-//        Glide.with(this)
-//            .load(selectedImageUri)
-//            .placeholder(R.drawable.flower)
-//            .into(imageEdit)
-//    }
-//    //uploadImageToFirebaseStorage()
-//    val placePosition = intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
-//    updatePlaceImageUri(selectedImageUri,placePosition)
+
     if (requestCode == PICK_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
         val selectedImageUri: Uri? = data?.data
+        Log.d("!!!","$selectedImageUri")
 
         // Ladda upp bilden till Firebase Storage och uppdatera sedan Firestore
         if (selectedImageUri != null) {
@@ -262,6 +237,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
                             // Uppdatera platsens imageUri i Firestore med downloadUrl
                             val placePosition =
                                 intent.getIntExtra(PLACE_POSITION_KEY, POSITION_NOT_SET)
+                            //updatePlaceImageUri(selectedImageUri,placePosition)
                             updatePlaceImageUri(downloadUrl, placePosition)
 
                                             Glide.with(this)
@@ -283,11 +259,6 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         val currentPlace = PlaceManager.places[position]
         currentPlace?.imageUri = imageUri.toString()
         uploadImageToFirebaseStorage(imageUri, currentPlace?.documentId)
-
-//                Glide.with(this)
-//            .load(selectedImageUri)
-//            .placeholder(R.drawable.flower)
-//            .into(imageEdit)
 
 
     }

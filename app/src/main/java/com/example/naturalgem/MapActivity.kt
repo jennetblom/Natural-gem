@@ -2,6 +2,9 @@ package com.example.naturalgem
 
 import android.content.Intent
 import android.os.Bundle
+
+
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
@@ -38,56 +41,28 @@ class MapActivity :FragmentActivity(),OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        createMarkers()
+
+        addMarkers()
 
     }
-    fun createMarkers(){
 
-        var hassafall = LatLng(57.7,14.1)
-        var visingso = LatLng(58.0,14.3)
-        var hawaiihålan = LatLng(58.1,12.625)
-        var skomakarens = LatLng(57.57,14.299)
-        var lummelunda = LatLng(57.738,18.409)
+    fun addMarkers(){
 
-        var marker1 = mMap.addMarker(
-            MarkerOptions()
-                .position(hassafall)
-                .title("Hassafallsleden")
-                .snippet("Promenadled")
-        )
-
-        var marker2 = mMap.addMarker(
-            MarkerOptions()
-                .position(visingso)
-                .title("Visingsö")
-                .snippet("En ö")
-        )
-
-        var marker3 = mMap.addMarker(
-            MarkerOptions()
-                .position(hawaiihålan)
-                .title("Hawaiihålan")
-                .snippet("Badplats")
-        )
-        var marker4 = mMap.addMarker(
-            MarkerOptions()
-                .position(skomakarens)
-                .title("Skomakarens kammare")
-                .snippet("Grotta")
-        )
-
-        var marker5 = mMap.addMarker(
-            MarkerOptions()
-                .position(lummelunda)
-                .title("Lummelundagrottan")
-                .snippet("Grotta")
-        )
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(hassafall))
-    }
-    fun addMarker(position:Int){
-        var place = PlaceManager.places[position]
+        Log.d("!!!","${PlaceManager.places.size}")
+            for (place in PlaceManager.places) {
+                if (place.latitude != null && place.longitude != null) {
+                    Log.d("!!!", "${place.latitude}")
+                    mMap.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(place.latitude!!, place.longitude!!))
+                            .title(place.name)
+                            .snippet(place.category.toString() ?: "")
+                    )
+                }
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(57.0,13.0)))
+        }
 
 
     }
-}
+

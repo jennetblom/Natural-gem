@@ -35,10 +35,6 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
         holder.placePosition=position
 
 
-//        if(place.imageResId!=null){holder.placeImage.setImageResource(place.imageResId!!)}else{
-//            holder.placeImage.setImageResource(R.drawable.flower)
-//        }
-
         if(place.imageUri!=null){
             Glide.with(holder.itemView.context)
                 .load(place.imageUri)
@@ -52,9 +48,7 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
 
     }
     fun removePlace(position: Int){
-////        PlaceManager.places.removeAt(position)
-//
-//        notifyDataSetChanged()
+
         val place = PlaceManager.places[position]
         if(place.documentId!=null) {
             db.collection("places").document(place.documentId!!).delete()
@@ -73,9 +67,7 @@ class PlacesRecyclerAdapter(val context : Context, val places : List<Place> ):
         init {
 
             itemView.setOnClickListener {
-//                val intent = Intent(context, AddPlaceAndEditActivity::class.java)
-//                intent.putExtra(PLACE_POSITION_KEY,placePosition)
-//                context.startActivity(intent)
+
                 val intent = Intent(context,DisplayPlaceActivity::class.java)
                 intent.putExtra(PLACE_POSITION_KEY,placePosition)
                 context.startActivity(intent)
